@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global E-Commerce</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header */
+    header {
+      padding: 20px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 28px;
+      color: #00d9ff;
+      z-index: 1100;
+    }
+
+    nav {
+      display: flex;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      transition: 0.3s;
+      color: white;
+    }
+
+    .nav-links a:hover {
+      color: #00d9ff;
+    }
+
+    /* Hamburger Menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      cursor: pointer;
+      z-index: 1101;
+    }
+
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.4s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      height: 100vh;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: right 0.5s ease;
+      z-index: 1000;
+    }
+
+    .mobile-menu.show {
+      right: 0;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      text-align: center;
+    }
+
+    .mobile-links a {
+      color: white;
+      font-size: 24px;
+      transform: scale(0.8);
+      opacity: 0;
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .mobile-links a:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    .mobile-links a:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+
+    .mobile-links a:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    .mobile-links a:nth-child(4) {
+      animation-delay: 0.8s;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 10%;
+      text-align: center;
+      background: linear-gradient(145deg, #1a2a3a, #2c5364);
+    }
+
+    .hero h2 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      transform: perspective(800px) rotateX(15deg);
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #ccc;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px) rotateX(45deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(15deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    /* Cards */
+    .categories,
+    .deals,
+    .products {
+      padding: 60px 10%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+    }
+
+    .category-card,
+    .product,
+    .deal {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: 0.5s;
+    }
+
+    .category-card:hover,
+    .product:hover,
+    .deal:hover {
+      transform: perspective(1000px) rotateY(10deg) scale(1.05);
+    }
+
+    .product img,
+    .deal img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .product h4,
+    .deal h4 {
+      margin-bottom: 10px;
+      color: #00d9ff;
+    }
+
+    .product p,
+    .deal p {
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    /* Why Us */
+    .why-us {
+      background: #1a1a2e;
+      padding: 60px 10%;
+      text-align: center;
+    }
+
+    .why-us h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .why-us p {
+      max-width: 800px;
+      margin: auto;
+      color: #ccc;
+    }
+
+    /* CTA */
+    .cta {
+      padding: 60px 10%;
+      text-align: center;
+      background: linear-gradient(135deg, #00d9ff, #0072ff);
+      color: #fff;
+    }
+
+    .cta h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .cta input[type="email"] {
+      padding: 10px 15px;
+      width: 250px;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+    }
+
+    .cta button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #0072ff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .cta button:hover {
+      background: #f0f0f0;
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      padding: 30px 10%;
+      background: #0f2027;
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 32px;
+      }
+
+      .cta h3 {
+        font-size: 24px;
+      }
+
+      .cta input[type="email"] {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .cta button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>GlobalMart</h1>
+
+    <!-- Hamburger -->
+    <div class="menu-toggle" id="menuToggle" onclick="toggleMenu(this)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Desktop Nav -->
+    <nav>
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">Deals</a>
+        <a href="#">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Mobile Fullscreen Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-links">
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">Deals</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Shop the World in One Place</h2>
+    <p>Discover products from every corner of the globe, curated just for you.</p>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories">
+    <div class="category-card">
+      <h3>Electronics</h3>
+      <p>Latest gadgets & smart devices</p>
+    </div>
+    <div class="category-card">
+      <h3>Fashion</h3>
+      <p>Global trends & luxury wear</p>
+    </div>
+    <div class="category-card">
+      <h3>Home & Kitchen</h3>
+      <p>Essentials for modern living</p>
+    </div>
+    <div class="category-card">
+      <h3>Beauty</h3>
+      <p>Top skincare & wellness</p>
+    </div>
+  </section>
+
+  <!-- Why Us -->
+  <section class="why-us">
+    <h2>Why Shop With Us?</h2>
+    <p>We bring the best global products under one digital roof. Enjoy fast worldwide shipping, secure payments, and
+      24/7 customer support. Whether you’re in Tokyo, New York, or Berlin — we’ve got you covered.</p>
+  </section>
+
+  <!-- Featured Deals -->
+  <section class="deals">
+    <div class="deal">
+      <img src="https://via.placeholder.com/200x150" alt="Deal 1">
+      <h4>Smartwatch 4X</h4>
+      <p>50% off — Limited Time</p>
+    </div>
+    <div class="deal">
+      <img src="https://via.placeholder.com/200x150" alt="Deal 2">
+      <h4>Luxury Sunglasses</h4>
+      <p>Flash Sale - Ends Tonight</p>
+    </div>
+    <div class="deal">
+      <img src="https://via.placeholder.com/200x150" alt="Deal 3">
+      <h4>Bluetooth Speaker</h4>
+      <p>Global Bestseller</p>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta">
+    <h3>Join Our Global Newsletter</h3>
+    <form onsubmit="event.preventDefault(); alert('Subscribed!');">
+      <input type="email" placeholder="Enter your email" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 GlobalMart. All rights reserved.
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function toggleMenu(button) {
+      const mobileMenu = document.getElementById('mobileMenu');
+      button.classList.toggle('active');
+      mobileMenu.classList.toggle('show');
+    }
+  </script>
+
+</body>
+
+</html>
