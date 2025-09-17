@@ -1,4 +1,0 @@
-    Database loginApp       (use loginApp)    
-            |
-            |
-    collection users        (db.users.find();)      -- for finding data;
