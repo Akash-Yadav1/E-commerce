@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= homepage.title || "GlobalMart USA" %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="container row">
+    <div class="row left">
+      <span class="badge">Ships to 190+ countries</span>
+      <span class="tag">Free returns in the USA</span>
+    </div>
+    <div class="row right">
+      <div class="select">
+        <span>Currency</span>
+        <select id="currency">
+          <option value="USD" selected>USD $</option>
+          <option value="EUR">EUR €</option>
+          <option value="GBP">GBP £</option>
+          <option value="INR">INR ₹</option>
+        </select>
+      </div>
+      <div class="select">
+        <span>Ship to</span>
+        <select id="shipto">
+          <option value="US" selected>United States</option>
+          <option value="CA">Canada</option>
+          <option value="EU">European Union</option>
+          <option value="IN">India</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="container header-row">
+    <div class="logo">
+      <div class="cube"></div>
+      <span>GlobalMart USA</span>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <div class="search">
+      <input id="search" type="search" placeholder="Search for products…" autocomplete="off">
+      <button class="btn" id="searchBtn">🔎</button>
+      <div class="suggest hide" id="suggest"></div>
+    </div>
+    <div class="actions">
+      <button class="icon-btn" id="ordersBtn">📦 <span class="tag">Orders</span></button>
+      <button class="icon-btn" id="accountBtn">👤 <span class="tag">Account</span></button>
+      <button class="icon-btn" id="cartBtn" onclick="location.href='/cart/guest'">
+        🛒 <span class="count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Promo Banner Slider -->
+<section class="promo-banner reveal">
+  <div class="promo-slides" id="promoSlides">
+    <% if(homepage.promoBanners && homepage.promoBanners.length){ %>
+      <% homepage.promoBanners.forEach((banner, i)=> { %>
+        <div class="promo-slide <%= i === 0 ? 'active' : '' %>"
+             style="background-image:url('<%= banner.img %>')">
+          <div class="promo-caption"><%= banner.caption %></div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container wrap">
+    <div>
+      <h1 class="headline"><%= homepage.heroHeadline || "Shop the World" %></h1>
+      <p class="sub"><%= homepage.heroSub || "Delivered to your door" %></p>
+    </div>
+    <div class="hero-card">
+      <div class="tilt" id="tilt">
+        <div class="carousel" id="heroCarousel">
+          <div class="slides">
+            <% if(homepage.heroSlides && homepage.heroSlides.length){ %>
+              <% homepage.heroSlides.forEach(slide=> { %>
+                <div class="slide">
+                  <img src="<%= slide.img %>" alt="Hero">
+                  <div class="caption"><%= slide.caption %></div>
+                </div>
+              <% }) %>
+            <% } %>
+          </div>
+          <div class="dots"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section>
+  <div class="container">
+    <h2>Shop by Category</h2>
+    <div class="grid cat reveal">
+      <% if(homepage.categories && homepage.categories.length){ %>
+        <% homepage.categories.forEach(cat=> { %>
+          <div class="cat-card">
+            <img src="<%= cat.img %>" alt="<%= cat.name %>">
+            <div><%= cat.name %></div>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- Products Sections (Deals, Best Sellers, New Arrivals, Trending, Recommended) -->
+<% const sections = ['deals','bestSellers','newArrivals','trending','recommended']; %>
+<% sections.forEach(sec => { %>
+  <% if(homepage[sec] && homepage[sec].length){ %>
+    <section id="<%= sec %>">
+      <div class="container">
+        <h2><%= sec === 'deals' ? '🔥 Top Deals' :
+                sec === 'bestSellers' ? '⭐ Best Sellers' :
+                sec === 'newArrivals' ? '🆕 New Arrivals' :
+                sec === 'trending' ? '🔥 Trending' :
+                '💡 Recommended' %></h2>
+        <div class="prod-row">
+          <% homepage[sec].forEach(p => { %>
+            <div class="prod-card">
+              <div class="thumb"><img src="<%= p.img %>" alt="<%= p.title %>"></div>
+              <div class="title"><%= p.title %></div>
+              <div class="price-row">
+                <div class="price">$<%= p.price %></div>
+                <% if(p.oldPrice){ %><div class="old">$<%= p.oldPrice %></div><% } %>
+              </div>
+              <button class="btn add-cart" data-id="<%= p._id || p.title %>"
+                      data-title="<%= p.title %>" data-price="<%= p.price %>" data-img="<%= p.img %>">
+                🛒 Add to Cart
+              </button>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </section>
+  <% } %>
+<% }) %>
+
+<!-- Brands -->
+<section>
+  <div class="container">
+    <h2>🏷️ Popular Brands</h2>
+    <div>
+      <% if(homepage.brands && homepage.brands.length){ %>
+        <% homepage.brands.forEach(b => { %>
+          <div class="badge"><%= b %></div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section>
+  <div class="container">
+    <h2>💬 Testimonials</h2>
+    <div>
+      <% if(homepage.testimonials && homepage.testimonials.length){ %>
+        <% homepage.testimonials.forEach(t=> { %>
+          <div class="banner">
+            <p>"<%= t.text %>"</p>
+            <strong>- <%= t.author %></strong>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container foot-grid">
+    <div>
+      <div class="logo"><div class="cube"></div><span>GlobalMart USA</span></div>
+      <p class="muted"><%= homepage.footer?.about || "" %></p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <% if(homepage.footer?.shopLinks){ %>
+        <% homepage.footer.shopLinks.forEach(l => { %>
+          <a href="#"><%= l %></a>
+        <% }) %>
+      <% } %>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <% if(homepage.footer?.helpLinks){ %>
+        <% homepage.footer.helpLinks.forEach(l => { %>
+          <a href="#"><%= l %></a>
+        <% }) %>
+      <% } %>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <% if(homepage.footer?.companyLinks){ %>
+        <% homepage.footer.companyLinks.forEach(l => { %>
+          <a href="#"><%= l %></a>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+  <div class="container subfoot">
+    <div>© <%= homepage.footer?.year || new Date().getFullYear() %> GlobalMart. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+ <!-- Deals -->
+    <section id="deals">
+        <div class="container">
+            <div class="section-title">
+                <h2>🔥 Top Deals today</h2>
+                <a href="#" class="tag">See all deals →</a>
+            </div>
+            <div class="row-wrap reveal">
+                <button class="arrow prev" aria-label="Prev" data-row="dealsRow">◀</button>
+                <div class="prod-row" id="dealsRow">
+                    <% if(homepage.deals && homepage.deals.length){ %>
+                        <% homepage.deals.forEach(p=> { %>
+                            <div class="prod-card">
+                                <div class="thumb"><img src="<%= p.img %>" alt="<%= p.title %>"></div>
+                                <div class="title">
+                                    <%= p.title %>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price">$<%= p.price %>
+                                    </div>
+                                    <% if(p.oldPrice){ %>
+                                        <div class="old">$<%= p.oldPrice %>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <button class="btn add-cart" data-id="<%= p._id || p.title %>"
+                                    data-title="<%= p.title %>" data-price="<%= p.price %>" data-img="<%= p.img %>">
+                                    🛒 Add to Cart
+                                </button>
+                            </div>
+                            <% }) %>
+                                <% } %>
+
+                </div>
+                <button class="arrow next" aria-label="Next" data-row="dealsRow">▶</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+    // old script
+    // --- UI Helpers ------------------------------------------------------------
+
+    const DUMMY_PRODUCTS = Array.from({ length: 24 }).map((_, i) => ({
+      id: 'p' + (i + 1),
+      title: [
+        'Noise-Cancelling Headphones',
+        '4K Action Camera',
+        'Smart Air Fryer 5L',
+        'Mechanical Keyboard RGB',
+        'Wireless Charger Pad',
+        'Smartwatch Pro X',
+        'Portable Bluetooth Speaker',
+        'Fitness Tracker Band',
+        'Robot Vacuum Cleaner',
+        'Gaming Mouse 8K',
+        'Ultra Slim Laptop 14"',
+        'Mirrorless Camera Lens 35mm',
+      ][i % 12] + ' #' + (i + 1),
+      price: (Math.random() * 200 + 39).toFixed(2),
+      old: (Math.random() * 260 + 99).toFixed(2),
+      rating: (Math.random() * 2 + 3).toFixed(1),
+      img: `https://picsum.photos/seed/prod${i}/480/480`
+    }));
+
+    
+ function productCard(p) {
+      const el = document.createElement('div');
+      el.className = 'prod-card';
+      el.innerHTML = `
+        <div class="thumb"><img src="${p.img}" alt="${p.title}" loading="lazy"></div>
+        <div class="title" title="${p.title}">${p.title}</div>
+        <div class="stars">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5 - Math.round(p.rating))} <span class="tag">(${p.rating})</span></div>
+        <div class="price-row">
+          <div class="price" data-price="${p.price}">$${p.price}</div>
+          <div class="old" data-old="${p.old}">$${p.old}</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn" data-add="${p.id}">Add to Cart</button>
+          <button class="btn ghost" onclick="alert('Wishlisted!')">♡</button>
+        </div>`;
+      return el;
+    }
+
+    // Populate rows
+    function mountRow(rowId, startIdx) {
+      const row = document.getElementById(rowId);
+      row.innerHTML = '';
+      DUMMY_PRODUCTS.slice(startIdx, startIdx + 10).forEach(p => row.appendChild(productCard(p)));
+    }
+
+
+// Promo banner slider with pause on hover
+function promoBanner() {
+  const root = document.getElementById("promoSlides");
+  if (!root) return;
+  const slides = root.querySelectorAll(".promo-slide");
+  let i = 0,
+    timer;
+
+  function showNext() {
+    slides[i].classList.remove("active");
+    i = (i + 1) % slides.length;
+    slides[i].classList.add("active");
+  }
+
+  function start() {
+    timer = setInterval(showNext, 5000);
+  }
+  function stop() {
+    clearInterval(timer);
+  }
+
+  root.addEventListener("mouseenter", stop);
+  root.addEventListener("mouseleave", start);
+
+  start();
+}
+
+// Hero carousel
+function heroCarousel() {
+  const root = document.getElementById("heroCarousel");
+  if (!root) return;
+
+  const slides = root.querySelector(".slides");
+  const items = root.querySelectorAll(".slide");
+  const dotsWrap = root.querySelector(".dots");
+  let i = 0,
+    timer;
+
+  const set = (idx) => {
+    i = (idx + items.length) % items.length;
+    slides.style.transform = `translateX(-${i * 100}%)`;
+    dotsWrap
+      .querySelectorAll(".dot")
+      .forEach((d, k) => d.classList.toggle("active", k === i));
+  };
+
+  items.forEach((_, k) => {
+    const b = document.createElement("button");
+    b.className = "dot" + (k === 0 ? " active" : "");
+    b.addEventListener("click", () => {
+      set(k);
+      reset();
+    });
+    dotsWrap.appendChild(b);
+  });
+
+  const next = () => set(i + 1);
+  const reset = () => {
+    clearInterval(timer);
+    timer = setInterval(next, 4500);
+  };
+
+  root.addEventListener("mouseenter", () => clearInterval(timer));
+  root.addEventListener("mouseleave", reset);
+  reset();
+}
+
+// 3D tilt on hero card
+function tiltCard() {
+  const card = document.getElementById("tilt");
+  if (!card) return;
+
+  const limit = 10;
+  card.addEventListener("mousemove", (e) => {
+    const r = card.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    const y = ((e.clientY - r.top) / r.height) * 2 - 1;
+    card.style.transform = `rotateY(${x * limit}deg) rotateX(${-y * limit}deg)`;
+  });
+  card.addEventListener("mouseleave", () => (card.style.transform = ""));
+}
+
+// Scroll reveal
+function revealOnScroll() {
+  const io = new IntersectionObserver(
+    (ents) => {
+      ents.forEach((ent) => {
+        if (ent.isIntersecting) {
+          ent.target.classList.add("show");
+          io.unobserve(ent.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+}
+
+// Mobile menu
+function mobileMenu() {
+  const burger = document.getElementById("hamburger");
+  const menu = document.getElementById("mobileMenu");
+  const scrim = document.getElementById("mobileScrim");
+  const close = document.getElementById("closeMobile");
+  if (!burger || !menu) return;
+
+  const open = () => {
+    burger.classList.add("active");
+    menu.classList.add("show");
+    document.body.classList.add("menu-open");
+  };
+  const shut = () => {
+    burger.classList.remove("active");
+    menu.classList.remove("show");
+    document.body.classList.remove("menu-open");
+  };
+  burger.addEventListener("click", () =>
+    menu.classList.contains("show") ? shut() : open()
+  );
+  scrim?.addEventListener("click", shut);
+  close?.addEventListener("click", shut);
+}
+
+// Prevent body shift when menu open
+(function () {
+  const css = document.createElement("style");
+  css.innerHTML = "body.menu-open{overflow:hidden}";
+  document.head.appendChild(css);
+})();
+
+// Back to top
+function toTop() {
+  const btn = document.getElementById("toTop");
+  if (!btn) return;
+
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY || document.documentElement.scrollTop;
+    btn.classList.toggle("show", y > 400);
+  });
+  btn.addEventListener("click", () =>
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  );
+}
+
+// Animate on scroll
+function animateOnScroll() {
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("show");
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+  document
+    .querySelectorAll(".prod-card, .cat-card, .banner, .ribbon, .newsletter")
+    .forEach((el) => io.observe(el));
+}
+
+// Init
+document.addEventListener("DOMContentLoaded", () => {
+  promoBanner();
+  heroCarousel();
+  tiltCard();
+  revealOnScroll();
+  mobileMenu();
+  toTop();
+  animateOnScroll();
+});
+
+function setupCart() {
+  const buttons = document.querySelectorAll(".add-cart");
+  const userId = "guest"; // Later replace with logged-in user ID
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const product = {
+        userId,
+        productId: btn.dataset.id,
+        title: btn.dataset.title,
+        price: btn.dataset.price,
+        img: btn.dataset.img,
+      };
+
+      try {
+        const res = await fetch("/api/cart", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(product),
+        });
+        const data = await res.json();
+        console.log("Cart updated:", data);
+
+        // Update cart counter
+        const count = data.items.reduce((sum, i) => sum + i.qty, 0);
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) cartCount.textContent = count;
+      } catch (err) {
+        console.error("Error adding to cart:", err);
+      }
+    });
+  });
+}
+
+    // Row arrows
+    function wireArrows() {
+      document.querySelectorAll('.arrow').forEach(btn => {
+        const rowId = btn.dataset.row;
+        const row = document.getElementById(rowId);
+        btn.addEventListener('click', () => {
+          const by = (btn.classList.contains('next') ? 1 : -1) * (row.clientWidth * .85);
+          row.scrollBy({ left: by, behavior: 'smooth' });
+        });
+      });
+    }
+    function initArrows() { wireArrows(); }
+
+document.addEventListener("DOMContentLoaded", () => {
+  promoBanner();
+  heroCarousel();
+  tiltCard();
+  revealOnScroll();
+  mobileMenu();
+  toTop();
+  animateOnScroll();
+      initArrows();
+
+  setupCart(); // 🛒 Initialize cart buttons
+});
+
+
+// Accessibility: close drawers/menus with ESC
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("mobileMenu")?.classList.remove("show");
+    document.body.classList.remove("menu-open");
+    document.getElementById("hamburger")?.classList.remove("active");
+  }
+});
+
+
+
+
+function heroCarousel() {
+  const root = document.getElementById('heroCarousel');
+  if (!root) return;
+
+  const slides = root.querySelectorAll('.slide');
+  const dotsWrap = root.querySelector('.dots');
+  if (!dotsWrap) return;
+
+  let i = 0;
+  let timer;
+
+  function setSlide(idx) {
+    i = (idx + slides.length) % slides.length;
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    dotsWrap.querySelectorAll('.dot').forEach((d, k) => d.classList.toggle('active', k === i));
+  }
+
+  slides.forEach((_, k) => {
+    const b = document.createElement('button');
+    b.className = 'dot' + (k === 0 ? ' active' : '');
+    b.addEventListener('click', () => { setSlide(k); resetTimer(); });
+    dotsWrap.appendChild(b);
+  });
+
+  function next() { setSlide(i + 1); }
+  function resetTimer() { clearInterval(timer); timer = setInterval(next, 4500); }
+
+  root.addEventListener('mouseenter', () => clearInterval(timer));
+  root.addEventListener('mouseleave', resetTimer);
+
+  setSlide(0);
+  resetTimer();
+}
