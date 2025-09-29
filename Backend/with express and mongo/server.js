@@ -14,9 +14,10 @@ app.set("view engine", "ejs");
 app.use(express.json()); // important to parse JSON
 
 // MongoDB connect
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("❌ Mongo Error:", err));
+  .catch((err) => console.error("❌ Mongo Error:", err));
 
 // Route: Homepage
 app.get("/", async (req, res) => {
@@ -43,14 +44,13 @@ app.get("/", async (req, res) => {
         shopLinks: [],
         helpLinks: [],
         companyLinks: [],
-        year: new Date().getFullYear()
-      }
+        year: new Date().getFullYear(),
+      },
     };
   }
 
   res.render("index", { homepage });
 });
-
 
 app.use("/api/homepage", homepageRoutes); // ✅ this is your POST/GET route
 
@@ -65,6 +65,7 @@ app.post("/api/homepage", async (req, res) => {
   }
 });
 
-
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
+);
