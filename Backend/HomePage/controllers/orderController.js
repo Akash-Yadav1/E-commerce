@@ -1,6 +1,6 @@
-import Order from "../models/Order";
+import Order from "../models/Order.js";
 
-exports.getOrders = async (req, res) => {
+export const getOrders = async (req, res) => {
   const orders = await Order.find().populate("user");
   res.json(orders);
 };

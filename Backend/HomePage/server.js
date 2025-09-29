@@ -2,13 +2,20 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDb from "./config/db.js";
-import productRoutes from "./routes/productRoutes";
-import categoryRoutes from "./routes/categoryRoutes";
-import userRoutes from "./routes/userRoutes";
-import orderRoutes from "./routes/orderRoutes";
-import reviewRoutes from "./routes/reviewRoutes"
+import productRoutes from "./routes/productRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({
+  path: path.resolve(__dirname, "../with express and mongo/.env"),
+});
 connectDb();
 
 const app = express();

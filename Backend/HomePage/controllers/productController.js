@@ -1,11 +1,11 @@
-import Product from "../models/Product";
+import Product from "../models/Product.js";
 
-exports.getProducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   const products = await Product.find();
   res.json(products);
 };
 
-exports.createProduct = async (req, res) => {
+export const createProduct = async (req, res) => {
   try {
     const product = new Product(req.body);
     await product.save();
