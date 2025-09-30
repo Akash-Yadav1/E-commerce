@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GlobalMart USA — Shop the World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container row">
+      <div class="row left">
+        <span class="badge">Ships to 190+ countries</span>
+        <span class="tag">Free returns in the USA</span>
+      </div>
+      <div class="row right">
+        <div class="select" aria-label="Currency selector">
+          <span>Currency</span>
+          <select id="currency">
+            <option value="USD" selected>USD $</option>
+            <option value="EUR">EUR €</option>
+            <option value="GBP">GBP £</option>
+            <option value="INR">INR ₹</option>
+          </select>
+        </div>
+        <div class="select" aria-label="Ship to selector">
+          <span>Ship to</span>
+          <select id="shipto">
+            <option value="US" selected>United States</option>
+            <option value="CA">Canada</option>
+            <option value="EU">European Union</option>
+            <option value="IN">India</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-row">
+      <div class="logo" aria-label="GlobalMart USA">
+        <div class="cube" aria-hidden="true"></div>
+        <span>GlobalMart USA</span>
+      </div>
+
+      <div class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span></div>
+      <div class="search" role="search">
+        <input id="search" type="search"
+          placeholder="Search for products, brands and more… (e.g., iPhone 16, Air Fryer)" autocomplete="off"
+          aria-label="Search" />
+        <button class="btn" id="searchBtn" aria-label="Search">
+          🔎
+        </button>
+        <div class="suggest hide" id="suggest"></div>
+      </div>
+
+      <div class="actions">
+        <button class="icon-btn" id="ordersBtn" aria-label="Your Orders">📦 <span class="tag">Orders</span></button>
+        <button class="icon-btn" id="accountBtn" aria-label="Sign in">👤 <span class="tag">Account</span></button>
+        <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+          🛒 <span class="count" id="cartCount">0</span>
+        </button>
+        
+      </div>
+    </div>
+
+    <!-- Desktop Nav -->
+    <nav class="main">
+      <div class="container nav-row">
+        <a class="nav-link mega" href="#">
+          Categories
+          <div class="mega-panel">
+            <div class="mega-grid">
+              <div class="mega-col">
+                <h4>Electronics</h4>
+                <a href="#">Smartphones</a>
+                <a href="#">Laptops</a>
+                <a href="#">Gaming</a>
+                <a href="#">Cameras</a>
+              </div>
+              <div class="mega-col">
+                <h4>Home & Kitchen</h4>
+                <a href="#">Appliances</a>
+                <a href="#">Cookware</a>
+                <a href="#">Furniture</a>
+                <a href="#">Decor</a>
+              </div>
+              <div class="mega-col">
+                <h4>Fashion</h4>
+                <a href="#">Men</a>
+                <a href="#">Women</a>
+                <a href="#">Sneakers</a>
+                <a href="#">Accessories</a>
+              </div>
+              <div class="mega-col">
+                <h4>Beauty & Health</h4>
+                <a href="#">Skincare</a>
+                <a href="#">Haircare</a>
+                <a href="#">Wellness</a>
+                <a href="#">Fitness</a>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="nav-link" href="#deals">Deals</a>
+        <a class="nav-link" href="#bestsellers">Best Sellers</a>
+        <a class="nav-link" href="#new">New Arrivals</a>
+        <a class="nav-link" href="#global">Global Store</a>
+        <a class="nav-link" href="#help">Help</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="scrim" id="mobileScrim"></div>
+    <aside class="mobile-sheet">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem">
+        <div class="logo">
+          <div class="cube"></div><span>GlobalMart</span>
+        </div>
+        <button class="btn ghost" id="closeMobile">✕ Close</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem">
+        <a href="#">Home</a>
+        <a href="#deals">Deals</a>
+        <a href="#bestsellers">Best Sellers</a>
+        <a href="#new">New Arrivals</a>
+        <a href="#global">Global Store</a>
+        <a href="#help">Help Center</a>
+      </div>
+      <hr style="border-color:rgba(255,255,255,.08)">
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <button class="btn" onclick="alert('Sign in coming soon!')">👤 Sign In</button>
+        <button class="btn ghost" onclick="alert('Install our app from stores — coming soon!')">📱 Get App</button>
+      </div>
+    </aside>
+  </div>
+
+
+  <!-- Promo Banner Slider -->
+  <section class="promo-banner reveal">
+    <div class="promo-slides" id="promoSlides">
+      <div class="promo-slide active"
+        style="background-image:url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1600&auto=format&fit=crop')">
+        <div class="promo-caption">🎉 Mega Sale – Up to 50% Off</div>
+      </div>
+      <div class="promo-slide"
+        style="background-image:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop')">
+        <div class="promo-caption">📚 Back to School Deals</div>
+      </div>
+      <div class="promo-slide"
+        style="background-image:url('https://images.unsplash.com/photo-1502920917128-1aa500764b8a?q=80&w=1600&auto=format&fit=crop')">
+        <div class="promo-caption">🚚 Free Shipping Worldwide</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container wrap">
+      <div>
+        <h1 class="headline">Shop the World — <span
+            style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Delivered
+            in the USA</span></h1>
+        <p class="sub">Explore 10M+ global products with fast US shipping, secure payments, and 24/7 support. From Tokyo
+          gadgets to Milan fashion — it's all here.</p>
+        <div class="hero-cta">
+          <a href="#deals" class="btn">🔥 Today's Deals</a>
+          <a href="#global" class="btn ghost">🌎 Global Store</a>
+        </div>
+        <div class="kpis">
+          <div class="kpi">✅ Authentic products</div>
+          <div class="kpi">🛡️ Buyer protection</div>
+          <div class="kpi">⚡ Express delivery</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="tilt" id="tilt">
+          <div class="carousel" id="heroCarousel" aria-roledescription="carousel">
+            <div class="slides">
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1600&auto=format&fit=crop"
+                  alt="Latest smartphones" loading="eager">
+                <div class="caption">Flagship Phones • Save up to 30%</div>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=1600&auto=format&fit=crop"
+                  alt="Home & kitchen deals" loading="lazy">
+                <div class="caption">Smart Kitchen • Cook like a pro</div>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1624281043172-16ff234c2a14?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fEZhc2hpb24lMjBlc3NlbnRpYWxzfGVufDB8fDB8fHww?q=80&w=1600&auto=format&fit=crop"
+                  alt="Fashion essentials" loading="lazy">
+                <div class="caption">Streetwear Drops • Up to 50% OFF</div>
+              </div>
+            </div>
+            <div class="dots" aria-label="Slide indicators"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <h2>Shop by Category</h2>
+        <a href="#" class="tag">Browse all →</a>
+      </div>
+      <div class="grid cat reveal">
+        <!-- 12 category cards -->
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=300&auto=format&fit=crop"
+            alt="Phones" loading="lazy">
+          <div>Phones</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=300&auto=format&fit=crop"
+            alt="Laptops" loading="lazy">
+          <div>Laptops</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z2FtaW5nfGVufDB8fDB8fHww?q=80&w=300&auto=format&fit=crop"
+            alt="Gaming" loading="lazy">
+          <div>Gaming</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=300&auto=format&fit=crop"
+            alt="Audio" loading="lazy">
+          <div>Audio</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=300&auto=format&fit=crop"
+            alt="Home" loading="lazy">
+          <div>Home</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=300&auto=format&fit=crop"
+            alt="Fashion" loading="lazy">
+          <div>Fashion</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=300&auto=format&fit=crop"
+            alt="Shoes" loading="lazy">
+          <div>Sneakers</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=300&auto=format&fit=crop"
+            alt="Beauty" loading="lazy">
+          <div>Beauty</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1604242692760-2f7b0c26856d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2F0Y2hlc3xlbnwwfHwwfHx8MA%3D%3D
+            alt="Watches" loading="lazy">
+          <div>Watches</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3BvcnR8ZW58MHx8MHx8fDA%3D?q=80&w=300&auto=format&fit=crop" alt="Sports"
+            loading="lazy">
+          <div>Sports</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHRveXN8ZW58MHx8MHx8fDA%3D?q=80&w=300&auto=format&fit=crop"
+            alt="Toys" loading="lazy">
+          <div>Toys</div>
+        </div>
+        <div class="cat-card"><img
+            src="https://images.unsplash.com/photo-1520970014086-2208d157c9e2?q=80&w=300&auto=format&fit=crop"
+            alt="Auto" loading="lazy">
+          <div>Auto</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deals Row -->
+  <section id="deals">
+    <div class="container">
+      <div class="section-title">
+        <h2>🔥 Top Deals today</h2>
+        <a href="#" class="tag">See all deals →</a>
+      </div>
+      <div class="row-wrap reveal">
+        <button class="arrow prev" aria-label="Prev" data-row="dealsRow">◀</button>
+        <div class="prod-row" id="dealsRow">
+          <!-- product cards (dummy) -->
+        </div>
+        <button class="arrow next" aria-label="Next" data-row="dealsRow">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner -->
+  <section class="reveal">
+    <div class="container">
+      <div class="banner">
+        <div>
+          <h3 style="margin:0 0 .3rem">Global Store — Duty Paid at Checkout</h3>
+          <p class="muted">Transparent pricing for imports. We estimate duties & taxes upfront so you get no surprises
+            at delivery.</p>
+          <div style="margin-top:.8rem;display:flex;gap:.6rem;flex-wrap:wrap">
+            <a href="#global" class="btn">Explore Global Store</a>
+            <span class="badge">New</span>
+          </div>
+        </div>
+        <img src="https://plus.unsplash.com/premium_photo-1661962773421-6b97ceec1f0e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z2xvYmFsJTIwc2hpcHBpbmd8ZW58MHx8MHx8fDA%3D"
+          alt="Global shipping" style="border-radius:14px">
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Sellers Row -->
+  <section id="bestsellers">
+    <div class="container">
+      <div class="section-title">
+        <h2>⭐ Best Sellers in USA</h2>
+        <a href="#" class="tag">Browse more →</a>
+      </div>
+      <div class="row-wrap reveal">
+        <button class="arrow prev" aria-label="Prev" data-row="bestRow">◀</button>
+        <div class="prod-row" id="bestRow"></div>
+        <button class="arrow next" aria-label="Next" data-row="bestRow">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features ribbon -->
+  <section class="reveal">
+    <div class="container">
+      <div class="ribbon">
+        <div class="tile">🚚 <div><strong>Fast US Delivery</strong>
+            <div class="tag">2–5 business days</div>
+          </div>
+        </div>
+        <div class="tile">🔒 <div><strong>Secure Payments</strong>
+            <div class="tag">PCI-DSS compliant</div>
+          </div>
+        </div>
+        <div class="tile">🛡️ <div><strong>Buyer Protection</strong>
+            <div class="tag">30-day returns</div>
+          </div>
+        </div>
+        <div class="tile">💬 <div><strong>24/7 Support</strong>
+            <div class="tag">Live chat & email</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Arrivals Row -->
+  <section id="new">
+    <div class="container">
+      <div class="section-title">
+        <h2>🆕 New Arrivals</h2>
+        <a href="#" class="tag">See fresh drops →</a>
+      </div>
+      <div class="row-wrap reveal">
+        <button class="arrow prev" aria-label="Prev" data-row="newRow">◀</button>
+        <div class="prod-row" id="newRow"></div>
+        <button class="arrow next" aria-label="Next" data-row="newRow">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="reveal">
+    <div class="container">
+      <div class="newsletter">
+        <div>
+          <h3 style="margin:.2rem 0">Join our newsletter</h3>
+          <p class="muted">Deals, new arrivals, and global drops — straight to your inbox. No spam, unsubscribe anytime.
+          </p>
+        </div>
+        <form class="field" onsubmit="event.preventDefault();alert('Subscribed! 🎉')">
+          <input type="email" placeholder="Enter your email" required>
+          <button class="btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Trending Now Row -->
+  <section id="trending">
+    <div class="container">
+      <div class="section-title">
+        <h2>🔥 Trending Now</h2>
+        <a href="#" class="tag">See more →</a>
+      </div>
+      <div class="row-wrap reveal">
+        <button class="arrow prev" aria-label="Prev" data-row="trendRow">◀</button>
+        <div class="prod-row" id="trendRow"></div>
+        <button class="arrow next" aria-label="Next" data-row="trendRow">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommended Row -->
+  <section id="recommended">
+    <div class="container">
+      <div class="section-title">
+        <h2>💡 Recommended for You</h2>
+        <a href="#" class="tag">See all →</a>
+      </div>
+      <div class="row-wrap reveal">
+        <button class="arrow prev" aria-label="Prev" data-row="recRow">◀</button>
+        <div class="prod-row" id="recRow"></div>
+        <button class="arrow next" aria-label="Next" data-row="recRow">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Showcase -->
+  <section class="reveal">
+    <div class="container">
+      <h2 style="margin-bottom:1rem">🏷️ Popular Brands</h2>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+        <div class="badge">Nike</div>
+        <div class="badge">Adidas</div>
+        <div class="badge">Samsung</div>
+        <div class="badge">Sony</div>
+        <div class="badge">Apple</div>
+        <div class="badge">LG</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="reveal">
+    <div class="container">
+      <h2 style="margin-bottom:1rem">💬 Customer Testimonials</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem">
+        <div class="banner">
+          <p>"Amazing service! Got my shoes from Italy in just 5 days!"</p>
+          <strong>- Alex</strong>
+        </div>
+        <div class="banner">
+          <p>"The duty-paid checkout is a lifesaver. No surprise fees."</p>
+          <strong>- Priya</strong>
+        </div>
+        <div class="banner">
+          <p>"I love the variety of products — feels like shopping the whole world."</p>
+          <strong>- John</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="help">
+    <div class="container foot-grid">
+      <div>
+        <div class="logo" style="margin-bottom:.6rem">
+          <div class="cube"></div><span>GlobalMart USA</span>
+        </div>
+        <p class="muted">Your gateway to global shopping — curated products from trusted international sellers,
+          delivered fast to the USA.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="#">Electronics</a>
+        <a href="#">Home & Kitchen</a>
+        <a href="#">Fashion</a>
+        <a href="#">Beauty</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">Support</a>
+        <a href="#">Track Order</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Affiliates</a>
+        <a href="#">Press</a>
+      </div>
+    </div>
+    <div class="container subfoot">
+      <div>© <span id="year"></span> GlobalMart. All rights reserved.</div>
+      <div class="tag">Terms • Privacy • Cookies</div>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <div class="drawer" id="cartDrawer" aria-hidden="true">
+    <div class="scrim" id="drawerScrim"></div>
+    <aside class="panel">
+      <div
+        style="display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid rgba(255,255,255,.06)">
+        <strong>🛒 Your Cart</strong>
+        <button class="btn ghost" id="closeCart">✕</button>
+      </div>
+      <div id="cartItems" style="padding:1rem;display:flex;flex-direction:column;gap:.8rem;flex:1;overflow:auto"></div>
+      <div style="padding:1rem;border-top:1px solid rgba(255,255,255,.06)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
+          <span class="muted">Subtotal</span>
+          <strong id="subtotal">$0.00</strong>
+        </div>
+        <button class="btn" style="width:100%" onclick="alert('Checkout flow coming soon!')">Proceed to
+          Checkout</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Back to top -->
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
