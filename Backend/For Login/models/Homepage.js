@@ -1,9 +1,15 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const homepageSchema = new mongoose.Schema({
   title: { type: String, default: "GlobalMart USA — Shop the World" },
-  heroHeadline: { type: String, default: "Shop the World — Delivered in the USA" },
-  heroSub: { type: String, default: "Explore 10M+ global products with fast US shipping." },
+  heroHeadline: {
+    type: String,
+    default: "Shop the World — Delivered in the USA",
+  },
+  heroSub: {
+    type: String,
+    default: "Explore 10M+ global products with fast US shipping.",
+  },
   promoBanners: [
     {
       image: String,
@@ -19,8 +25,9 @@ const homepageSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Homepage", homepageSchema);
+const Homepage = mongoose.model("Homepage", homepageSchema);
 
+export default Homepage;
 
 // const mongoose = require("mongoose");
 

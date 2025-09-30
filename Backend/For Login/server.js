@@ -1,11 +1,11 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const cors = require("cors");
-const path = require("path");
+import express from "express";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import cors from "cors";
+import path from "path";
 
-const User = require("./models/User");
-const Homepage = require("./models/Homepage");
+import User from "./models/User";
+import Homepage from "./models/Homepage";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -68,7 +68,9 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
     const user = await User.findOne({ email });
