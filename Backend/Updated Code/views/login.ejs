@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark 3D Login & Sign Up</title>
+
+  <!-- You can move this CSS to /public/style.css if you want -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .background span {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      animation: float 10s infinite ease-in-out;
+    }
+    .background span:nth-child(1) { top: 10%; left: 20%; animation-duration: 12s; }
+    .background span:nth-child(2) { top: 30%; left: 80%; animation-duration: 15s; }
+    .background span:nth-child(3) { top: 70%; left: 40%; animation-duration: 18s; }
+    .background span:nth-child(4) { top: 80%; left: 10%; animation-duration: 20s; }
+    .background span:nth-child(5) { top: 50%; left: 60%; animation-duration: 25s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-50px) scale(1.2); }
+    }
+
+    .container-wrapper {
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: height 0.5s ease;
+    }
+
+    .container { perspective: 1200px; position: relative; width: 380px; }
+
+    .card { position: relative; transform-style: preserve-3d; transition: transform 0.8s ease; }
+    .card.flip { transform: rotateY(180deg); }
+
+    .form {
+      background: rgba(20, 20, 30, 0.95);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      color: #eee;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      position: absolute;
+      width: 100%;
+      top: 0; left: 0;
+      backface-visibility: hidden;
+    }
+
+    .form h2 { margin-bottom: 20px; font-size: 24px; color: #00d9ff; }
+
+    .input-group { margin-bottom: 20px; }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5),
+                  inset -2px -2px 5px rgba(255,255,255,0.05);
+      transition: 0.3s ease;
+    }
+
+    .input-group input:focus {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.05);
+      border: 1px solid #00d9ff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #00d9ff, #0072ff);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.4s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.8);
+    }
+
+    .toggle-link {
+      margin-top: 15px;
+      display: inline-block;
+      color: #aaa;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .toggle-link:hover { color: #00d9ff; }
+
+    .form.front { z-index: 2; }
+    .form.back { transform: rotateY(180deg); z-index: 1; }
+
+    @media (max-width: 420px) { .container { width: 90%; } }
+  </style>
+</head>
+<body>
+  <!-- Floating Background -->
+  <div class="background">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- Centered container wrapper -->
+  <div class="container-wrapper" id="containerWrapper">
+    <div class="container" id="container">
+      <div class="card" id="card">
+        
+        <!-- Login Form -->
+        <div class="form front" id="loginForm">
+          <h2>Login</h2>
+          <div class="input-group">
+            <input type="email" id="loginEmail" placeholder="Email" required />
+          </div>
+          <div class="input-group">
+            <input type="password" id="loginPassword" placeholder="Password" required />
+          </div>
+          <button class="btn" onclick="loginUser()">Login</button>
+          <div class="toggle-link" onclick="flipCard()">Don’t have an account? Sign Up</div>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div class="form back" id="signupForm">
+          <h2>Sign Up</h2>
+          <div class="input-group">
+            <input type="text" id="signupName" placeholder="Full Name" required />
+          </div>
+          <div class="input-group">
+            <input type="email" id="signupEmail" placeholder="Email" required />
+          </div>
+          <div class="input-group">
+            <input type="password" id="signupPassword" placeholder="Password" required />
+          </div>
+          <div class="input-group">
+            <input type="password" id="signupConfirm" placeholder="Confirm Password" required />
+          </div>
+          <button class="btn" onclick="registerUser()">Sign Up</button>
+          <div class="toggle-link" onclick="flipCard()">Already have an account? Login</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function registerUser() {
+      const full_name = document.getElementById("signupName").value;
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      const confirm_password = document.getElementById("signupConfirm").value;
+
+      const res = await fetch("/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ full_name, email, password, confirm_password })
+      });
+
+      const data = await res.json();
+      alert(data.message);
+    }
+
+    async function loginUser() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        window.location.href = data.redirect; // ✅ server-provided redirect
+      } else {
+        alert(data.message);
+      }
+    }
+
+    const card = document.getElementById('card');
+    function flipCard() { card.classList.toggle('flip'); }
+
+    // Adjust wrapper height on load
+    window.onload = () => {
+      const loginForm = document.getElementById('loginForm');
+      const wrapper = document.getElementById('containerWrapper');
+      const height = loginForm.offsetHeight;
+      wrapper.style.height = height + 'px';
+    };
+  </script>
+</body>
+</html>
