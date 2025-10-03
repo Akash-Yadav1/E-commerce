@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import cors from "cors";
 import path from "path";
+import { fileURLToPath } from "url";
 
-import User from "./models/User";
-import Homepage from "./models/Homepage";
+import User from "./models/User.js";
+import Homepage from "./models/Homepage.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,6 +17,8 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ Serve static files but disable auto index.html
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "public"), { index: false }));
 
 // ✅ Force root (/) → login.html

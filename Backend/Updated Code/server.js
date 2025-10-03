@@ -10,7 +10,7 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import bcrypt from "bcryptjs";
-import slugify from "slugify";   // ✅ add this
+import slugify from "slugify"; // ✅ add this
 
 // ✅ Fix: define __dirname FIRST
 const __filename = fileURLToPath(import.meta.url);
@@ -37,9 +37,10 @@ app.use(
 );
 
 // MongoDB connect
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("❌ Mongo Error:", err));
+  .catch((err) => console.error("❌ Mongo Error:", err));
 
 // Force root (/) → login.html
 app.get("/", (req, res) => {
@@ -80,7 +81,9 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
     const user = await User.findOne({ email });
@@ -123,8 +126,8 @@ app.get("/home", async (req, res) => {
         shopLinks: [],
         helpLinks: [],
         companyLinks: [],
-        year: new Date().getFullYear()
-      }
+        year: new Date().getFullYear(),
+      },
     };
   }
 
@@ -146,11 +149,10 @@ app.get("/api/homepage/all", async (req, res) => {
 // API: Update homepage data (full replace)
 app.put("/api/homepage/:id", async (req, res) => {
   try {
-    const homepage = await Homepage.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+    const homepage = await Homepage.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     if (!homepage) {
       return res.status(404).json({ error: "Homepage not found" });
     }
@@ -166,7 +168,7 @@ app.delete("/api/homepage", async (req, res) => {
     const result = await Homepage.deleteMany({});
     res.json({
       message: "All homepage data deleted successfully",
-      deletedCount: result.deletedCount
+      deletedCount: result.deletedCount,
     });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -178,7 +180,7 @@ app.get("/category/:name", async (req, res) => {
   try {
     const category = req.params.name.toLowerCase();
     const products = await Product.find({ category });
-    const brands = [...new Set(products.map(p => p.brand))];
+    const brands = [...new Set(products.map((p) => p.brand))];
     res.render("category", { products, brands, category });
   } catch (err) {
     console.error(err);
@@ -192,12 +194,16 @@ app.post("/api/products/bulk", async (req, res) => {
     const allProducts = req.body;
 
     if (!allProducts || Object.keys(allProducts).length === 0) {
-      return res.status(400).json({ message: "Request body must contain categories with products" });
+      return res
+        .status(400)
+        .json({
+          message: "Request body must contain categories with products",
+        });
     }
 
     let inserted = [];
     for (const category in allProducts) {
-      const products = allProducts[category].map(p => ({
+      const products = allProducts[category].map((p) => ({
         name: p.name,
         brand: p.brand,
         price: p.price,
@@ -207,7 +213,7 @@ app.post("/api/products/bulk", async (req, res) => {
         reviews: p.reviews || 0,
         prime: p.prime || false,
         category: category.toLowerCase(),
-        slug: slugify(p.name, { lower: true, strict: true })  // ✅ auto slug
+        slug: slugify(p.name, { lower: true, strict: true }), // ✅ auto slug
       }));
 
       const result = await Product.insertMany(products, { ordered: false });
@@ -217,7 +223,7 @@ app.post("/api/products/bulk", async (req, res) => {
     res.status(201).json({
       message: "✅ Products inserted successfully",
       count: inserted.length,
-      inserted
+      inserted,
     });
   } catch (err) {
     console.error("Bulk insert error:", err);
@@ -232,16 +238,18 @@ app.get("/api/products/:category", async (req, res) => {
     const products = await Product.find({ category });
 
     if (!products || products.length === 0) {
-      return res.status(404).json({ message: `No products found in category: ${category}` });
+      return res
+        .status(404)
+        .json({ message: `No products found in category: ${category}` });
     }
 
-    const brands = [...new Set(products.map(p => p.brand))];
+    const brands = [...new Set(products.map((p) => p.brand))];
 
     res.json({
       category,
       count: products.length,
       brands,
-      products
+      products,
     });
   } catch (err) {
     console.error(err);
@@ -250,4 +258,6 @@ app.get("/api/products/:category", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
+);
