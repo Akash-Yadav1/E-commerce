@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= homepage.title %>
+    </title>
+    <!-- <link rel="stylesheet" href="/cat-style.css"> -->
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+        <nav class="main">
+            <div class="container nav-row">
+                <a class="nav-link mega" href="#">
+                    Categories
+                    <div class="mega-panel">
+                        <div class="mega-grid">
+                            <div class="mega-col">
+                                <h4>Electronics</h4>
+                                <a href="#">Smartphones</a>
+                                <a href="#">Laptops</a>
+                                <a href="#">Gaming</a>
+                                <a href="#">Cameras</a>
+                            </div>
+                            <div class="mega-col">
+                                <h4>Home & Kitchen</h4>
+                                <a href="#">Appliances</a>
+                                <a href="#">Cookware</a>
+                                <a href="#">Furniture</a>
+                                <a href="#">Decor</a>
+                            </div>
+                            <div class="mega-col">
+                                <h4>Fashion</h4>
+                                <a href="#">Men</a>
+                                <a href="#">Women</a>
+                                <a href="#">Sneakers</a>
+                                <a href="#">Accessories</a>
+                            </div>
+                            <div class="mega-col">
+                                <h4>Beauty & Health</h4>
+                                <a href="#">Skincare</a>
+                                <a href="#">Haircare</a>
+                                <a href="#">Wellness</a>
+                                <a href="#">Fitness</a>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="nav-link" href="#deals">Deals</a>
+                <a class="nav-link" href="#bestsellers">Best Sellers</a>
+                <a class="nav-link" href="#new">New Arrivals</a>
+                <a class="nav-link" href="#global">Global Store</a>
+                <a class="nav-link" href="#help">Help</a>
+            </div>
+        </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="scrim" id="mobileScrim"></div>
+        <aside class="mobile-sheet">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem">
+                <div class="logo">
+                    <div class="cube"></div><span>GlobalMart</span>
+                </div>
+                <button class="btn ghost" id="closeMobile">✕ Close</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem">
+                <a href="#">Home</a>
+                <a href="#deals">Deals</a>
+                <a href="#bestsellers">Best Sellers</a>
+                <a href="#new">New Arrivals</a>
+                <a href="#global">Global Store</a>
+                <a href="#help">Help Center</a>
+            </div>
+            <hr style="border-color:rgba(255,255,255,.08)">
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+                <button class="btn" onclick="alert('Sign in coming soon!')">👤 Sign In</button>
+                <button class="btn ghost" onclick="alert('Install our app from stores — coming soon!')">📱 Get
+                    App</button>
+            </div>
+        </aside>
+    </div>
+
+
+    <!-- Promo Banner Slider -->
+    <section class="promo-banner reveal">
+        <div class="promo-slides" id="promoSlides">
+            <% if (homepage.promoBanners && homepage.promoBanners.length) { %>
+                <% homepage.promoBanners.forEach((banner, i)=> { %>
+                    <div class="promo-slide <%= i === 0 ? 'active' : '' %>"
+                        style="background-image:url('<%= banner.img %>')">
+                        <div class="promo-caption">
+                            <%= banner.caption %>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } %>
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container wrap">
+            <div>
+                <h1 class="headline">
+                    <%= homepage.heroHeadline %><span
+                            style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Delivered
+                            in the USA</span>
+                </h1>
+                <p class="sub">
+                    <%= homepage.heroSub %>
+                </p>
+                <div class="hero-cta">
+                    <a href="#deals" class="btn">🔥 Today's Deals</a>
+                    <a href="#global" class="btn ghost">🌎 Global Store</a>
+                </div>
+                <div class="kpis">
+                    <div class="kpi">✅ Authentic products</div>
+                    <div class="kpi">🛡️ Buyer protection</div>
+                    <div class="kpi">⚡ Express delivery</div>
+                </div>
+            </div>
+            <div class="hero-card">
+                <div class="tilt" id="tilt">
+                    <div class="carousel" id="heroCarousel" aria-roledescription="carousel">
+                        <div class="slides">
+                            <% const uniqueSlides=[]; const seenSlides=new Set(); homepage.heroSlides.forEach(slide=> {
+                                if (!seenSlides.has(slide.img)) {
+                                uniqueSlides.push(slide);
+                                seenSlides.add(slide.img);
+                                }
+                                });
+                                %>
+
+                                <% uniqueSlides.forEach((slide, i)=> { %>
+                                    <div class="slide <%= i === 0 ? 'active' : '' %>">
+                                        <img src="<%= slide.img %>" alt="Hero">
+                                        <div class="caption">
+                                            <%= slide.caption %>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                        </div>
+
+                        <!-- Dots Indicators -->
+                        <div class="dots" aria-label="Slide indicators">
+                            <% uniqueSlides.forEach((slide, i)=> { %>
+                                <span class="dot <%= i === 0 ? 'active' : '' %>" data-slide="<%= i %>"></span>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section>
+        <div class="container">
+            <h2>Shop by Category</h2>
+            <div class="grid cat reveal">
+                <% if(homepage.categories && homepage.categories.length){ %>
+                    <% homepage.categories.forEach(cat=> { %>
+                        <a href="/category/<%= cat.name.toLowerCase() %>" class="cat-card">
+                            <img src="<%= cat.img %>" alt="<%= cat.name %>" />
+                            <div>
+                                <%= cat.name %>
+                            </div>
+                        </a>
+                        <% }) %>
+                            <% } %>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Deals -->
+    <section id="deals">
+        <div class="container">
+            <div class="section-title">
+                <h2>🔥 Top Deals today</h2>
+                <a href="#" class="tag">See all deals →</a>
+            </div>
+            <div class="row-wrap reveal">
+                <button class="arrow prev" aria-label="Prev" data-row="dealsRow">◀</button>
+                <div class="prod-row" id="dealsRow">
+                    <% if(homepage.deals && homepage.deals.length){ %>
+                        <% homepage.deals.forEach(p=> { %>
+                            <div class="prod-card">
+                                <div class="thumb"><img src="<%= p.img %>" alt="<%= p.title %>"></div>
+                                <div class="title">
+                                    <%= p.title %>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price">$<%= p.price %>
+                                    </div>
+                                    <% if(p.oldPrice){ %>
+                                        <div class="old">$<%= p.oldPrice %>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <button class="btn add-cart" data-id="<%= p._id || p.title %>"
+                                    data-title="<%= p.title %>" data-price="<%= p.price %>" data-img="<%= p.img %>">
+                                    🛒 Add to Cart
+                                </button>
+                            </div>
+                            <% }) %>
+                                <% } %>
+
+                </div>
+                <button class="arrow next" aria-label="Next" data-row="dealsRow">▶</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner -->
+    <section class="reveal">
+        <div class="container">
+            <div class="banner">
+                <div>
+                    <h3 style="margin:0 0 .3rem">Global Store — Duty Paid at Checkout</h3>
+                    <p class="muted">Transparent pricing for imports. We estimate duties & taxes upfront so you get no
+                        surprises
+                        at delivery.</p>
+                    <div style="margin-top:.8rem;display:flex;gap:.6rem;flex-wrap:wrap">
+                        <a href="#global" class="btn">Explore Global Store</a>
+                        <span class="badge">New</span>
+                    </div>
+                </div>
+                <img src="https://plus.unsplash.com/premium_photo-1661962773421-6b97ceec1f0e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z2xvYmFsJTIwc2hpcHBpbmd8ZW58MHx8MHx8fDA%3D"
+                    alt="Global shipping" style="border-radius:14px">
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section id="bestsellers">
+        <div class="container">
+            <div class="section-title">
+                <h2>⭐ Best Sellers in USA</h2>
+                <a href="#" class="tag">Browse more →</a>
+            </div>
+            <div class="row-wrap reveal">
+                <button class="arrow prev" aria-label="Prev" data-row="bestRow">◀</button>
+                <div class="prod-row" id="bestRow">
+                    <% if(homepage.bestSellers && homepage.bestSellers.length){ %>
+                        <% homepage.bestSellers.forEach(p=> { %>
+                            <div class="prod-card">
+                                <div class="thumb"><img src="<%= p.img %>" alt="<%= p.title %>"></div>
+                                <div class="title">
+                                    <%= p.title %>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price">$<%= p.price %>
+                                    </div>
+                                    <div class="old">$<%= p.oldPrice %>
+                                    </div>
+                                </div>
+                                <button class="btn add-cart" data-id="<%= p._id || p.title %>"
+                                    data-title="<%= p.title %>" data-price="<%= p.price %>" data-img="<%= p.img %>">
+                                    🛒 Add to Cart
+                                </button>
+                            </div>
+
+                            <% }) %>
+                                <% } %>
+                </div>
+                <button class="arrow next" aria-label="Next" data-row="bestRow">▶</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features ribbon -->
+    <section class="reveal">
+        <div class="container">
+            <div class="ribbon">
+                <div class="tile">🚚 <div><strong>Fast US Delivery</strong>
+                        <div class="tag">2–5 business days</div>
+                    </div>
+                </div>
+                <div class="tile">🔒 <div><strong>Secure Payments</strong>
+                        <div class="tag">PCI-DSS compliant</div>
+                    </div>
+                </div>
+                <div class="tile">🛡️ <div><strong>Buyer Protection</strong>
+                        <div class="tag">30-day returns</div>
+                    </div>
+                </div>
+                <div class="tile">💬 <div><strong>24/7 Support</strong>
+                        <div class="tag">Live chat & email</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- New Arrivals -->
+    <section id="new">
+        <div class="container">
+            <div class="section-title">
+                <h2>🆕 New Arrivals</h2>
+                <a href="#" class="tag">See fresh drops →</a>
+            </div>
+            <div class="row-wrap reveal">
+                <button class="arrow prev" aria-label="Prev" data-row="newRow">◀</button>
+                <div class="prod-row" id="newRow">
+                    <% if(homepage.newArrivals && homepage.newArrivals.length){ %>
+                        <% homepage.newArrivals.forEach(p=> { %>
+                            <div class="prod-card">
+                                <div class="thumb"><img src="<%= p.img %>" alt="<%= p.title %>"></div>
+                                <div class="title">
+                                    <%= p.title %>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price">$<%= p.price %>
+                                    </div>
+                                    <div class="old">$<%= p.oldPrice %>
+                                    </div>
+                                </div>
+                                <button class="btn add-cart" data-id="<%= p._id || p.title %>"
+                                    data-title="<%= p.title %>" data-price="<%= p.price %>" data-img="<%= p.img %>">
+                                    🛒 Add to Cart
+                                </button>
+                            </div>
+
+                            <% }) %>
+                                <% } %>
+                </div>
+                <button class="arrow next" aria-label="Next" data-row="newRow">▶</button>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Newsletter -->
+    <section class="reveal">
+        <div class="container">
+            <div class="newsletter">
+                <div>
+                    <h3 style="margin:.2rem 0">Join our newsletter</h3>
+                    <p class="muted">Deals, new arrivals, and global drops — straight to your inbox. No spam,
+                        unsubscribe anytime.
+                    </p>
+                </div>
+                <form class="field" onsubmit="event.preventDefault();alert('Subscribed! 🎉')">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Trending -->
+    <section id="trending">
+        <div class="container">
+            <div class="section-title">
+                <h2>🔥 Trending Now</h2>
+                <a href="#" class="tag">See more →</a>
+            </div>
+            <div class="row-wrap reveal">
+                <button class="arrow prev" aria-label="Prev" data-row="trendRow">◀</button>
+                <div class="prod-row" id="trendRow">
+                    <% if(homepage.trending && homepage.trending.length){ %>
+                        <% homepage.trending.forEach(p=> { %>
+                            <div class="prod-card">
+                                <div class="thumb"><img src="<%= p.img %>" alt="<%= p.title %>"></div>
+                                <div class="title">
+                                    <%= p.title %>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price">$<%= p.price %>
+                                    </div>
+                                    <div class="old">$<%= p.oldPrice %>
+                                    </div>
+                                </div>
+                                <button class="btn add-cart" data-id="<%= p._id || p.title %>"
+                                    data-title="<%= p.title %>" data-price="<%= p.price %>" data-img="<%= p.img %>">
+                                    🛒 Add to Cart
+                                </button>
+                            </div>
+
+                            <% }) %>
+                                <% } %>
+                </div>
+                <button class="arrow next" aria-label="Next" data-row="trendRow">▶</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommended -->
+    <section id="recommended">
+        <div class="container">
+            <div class="section-title">
+                <h2>💡 Recommended for You</h2>
+                <a href="#" class="tag">See all →</a>
+            </div>
+            <div class="row-wrap reveal">
+                <button class="arrow prev" aria-label="Prev" data-row="recRow">◀</button>
+                <div class="prod-row" id="recRow">
+                    <% if(homepage.recommended && homepage.recommended.length){ %>
+                        <% homepage.recommended.forEach(p=> { %>
+                            <div class="prod-card">
+                                <div class="thumb"><img src="<%= p.img %>" alt="<%= p.title %>"></div>
+                                <div class="title">
+                                    <%= p.title %>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price">$<%= p.price %>
+                                    </div>
+                                    <div class="old">$<%= p.oldPrice %>
+                                    </div>
+                                </div>
+                                <button class="btn add-cart" data-id="<%= p._id || p.title %>"
+                                    data-title="<%= p.title %>" data-price="<%= p.price %>" data-img="<%= p.img %>">
+                                    🛒 Add to Cart
+                                </button>
+                            </div>
+
+                            <% }) %>
+                                <% } %>
+                </div>
+                <button class="arrow next" aria-label="Next" data-row="recRow">▶</button>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Brands -->
+    <section>
+        <div class="container">
+            <h2 style="margin-bottom:1rem">🏷️ Popular Brands</h2>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+                <% if(homepage.brands && homepage.brands.length){ %>
+                    <% homepage.brands.forEach(b=> { %>
+                        <div class="badge">
+                            <%= b %>
+                        </div>
+                        <% }) %>
+                            <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="reveal">
+        <div class="container">
+            <h2 style="margin-bottom:1rem">💬 Customer Testimonials</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem">
+                <% if(homepage.testimonials && homepage.testimonials.length){ %>
+                    <% homepage.testimonials.forEach(t=> { %>
+                        <div class="banner">
+                            <p>"<%= t.text %>"</p>
+                            <strong>- <%= t.author %></strong>
+                        </div>
+                        <% }) %>
+                            <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="help">
+        <div class="container foot-grid">
+            <div>
+                <div class="logo" style="margin-bottom:.6rem">
+                    <div class="cube"></div><span>GlobalMart USA</span>
+                </div>
+                <p class="muted">
+                    <%= homepage.footer.about %>
+                </p>
+            </div>
+            <div>
+                <h4>Shop</h4>
+                <% homepage.footer.shopLinks.forEach(l=> { %><a href="/electronics">
+                        <%= l %>
+                    </a>
+                    <% }) %>
+            </div>
+            <div>
+                <h4>Help</h4>
+                <% homepage.footer.helpLinks.forEach(l=> { %><a href="#">
+                        <%= l %>
+                    </a>
+                    <% }) %>
+            </div>
+            <div>
+                <h4>Company</h4>
+                <% homepage.footer.companyLinks.forEach(l=> { %><a href="#">
+                        <%= l %>
+                    </a>
+                    <% }) %>
+            </div>
+        </div>
+        <div class="container subfoot">
+            <div>© <span id="year"></span>
+                <%= homepage.footer.year %> GlobalMart. All rights reserved.
+            </div>
+            <div class="tag">Terms • Privacy • Cookies</div>
+        </div>
+    </footer>
+
+
+    
+
+    <script src="/script.js"></script>
+</body>
+
+</html>

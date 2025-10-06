@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phones - GlobalMart USA</title>
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/cat-style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <%- include('partials/navbar') %>
+
+
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Sidebar Filters -->
+            <div class="sidebar">
+                <h3>Brand</h3>
+                <% if (brands && brands.length> 0) { %>
+                    <% brands.forEach(b=> { %>
+                        <label>
+                            <input type="checkbox" class="filter-brand" value="<%= b %>">
+                            <%= b %>
+                        </label>
+                        <% }) %>
+                            <% } else { %>
+                                <p class="muted">No brands available</p>
+                                <% } %>
+
+                                    <h3>Price</h3>
+                                    <label><input type="checkbox" class="filter-price" value="0-300"> $0 - $300</label>
+                                    <label><input type="checkbox" class="filter-price" value="301-600"> $301 -
+                                        $600</label>
+                                    <label><input type="checkbox" class="filter-price" value="601-900"> $601 -
+                                        $900</label>
+                                    <label><input type="checkbox" class="filter-price" value="901-1500"> $901 -
+                                        $1500</label>
+
+                                    <h3>Rating</h3>
+                                    <label><input type="checkbox" class="filter-rating" value="5"> 5 Stars</label>
+                                    <label><input type="checkbox" class="filter-rating" value="4"> 4 Stars & Up</label>
+                                    <label><input type="checkbox" class="filter-rating" value="3"> 3 Stars & Up</label>
+
+                                    <h3>Prime</h3>
+                                    <label><input type="checkbox" class="filter-prime" value="true"> Prime
+                                        Eligible</label>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid">
+                <% if (products.length> 0) { %>
+                    <% products.forEach(product=> { %>
+                        <div class="product-card">
+                            <a href="/product/<%= product.slug %>" class="product-link">
+                                <div class="image-box">
+                                    <% if (product.img) { %>
+                                        <img src="<%= product.img %>" alt="<%= product.name %>" class="product-img">
+                                        <% } else { %>
+                                            <img src="/images/placeholder.png" alt="No image" class="product-img">
+                                            <% } %>
+                                </div>
+
+                                <div class="product-info">
+                                        <div class="product-name"><a href="/product/<%= product.slug %>">
+                                                <%= product.name %>
+                                            </a></div>
+                                        <div class="product-rating">
+                                            <% for(let i=0;i<5;i++){ %>
+                                                <% if(i<product.rating){ %> ★ <% } else { %> ☆ <% } %>
+                                                            <% } %>
+                                                                <span class="review-count">(<%= product.reviews %>)</span>
+                                        </div>
+                                        <div>
+                                            <span class="product-price" data-price="<%= product.price %>">$<%= product.price %>
+                                            </span>
+                                            <% if(product.oldPrice){ %>
+                                                <span class="old-price" data-old="<%= product.oldPrice %>">$<%= product.oldPrice %>
+                                                </span>
+                                                <% } %>
+                                        </div>
+                                        <button class="add-to-cart" data-add="<%= product._id %>">Add to Cart</button>
+                                    </div>
+                            </a>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p>No products found in this category.</p>
+                                <% } %>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer id="help">
+            <div class="container foot-grid">
+                <div>
+                    <div class="logo" style="margin-bottom:.6rem">
+                        <div class="cube"></div><span>GlobalMart USA</span>
+                    </div>
+                    <p class="muted">Your gateway to global shopping — curated products from trusted international
+                        sellers,
+                        delivered fast to the USA.</p>
+                </div>
+                <div>
+                    <h4>Shop</h4>
+                    <a href="#">Electronics</a>
+                    <a href="#">Home & Kitchen</a>
+                    <a href="#">Fashion</a>
+                    <a href="#">Beauty</a>
+                </div>
+                <div>
+                    <h4>Help</h4>
+                    <a href="#">Shipping</a>
+                    <a href="#">Returns</a>
+                    <a href="#">Support</a>
+                    <a href="#">Track Order</a>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <a href="#">About</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Affiliates</a>
+                    <a href="#">Press</a>
+                </div>
+            </div>
+            <div class="container subfoot">
+                <div>© <span id="year"></span> GlobalMart. All rights reserved.</div>
+                <div class="tag">Terms • Privacy • Cookies</div>
+            </div>
+        </footer>
+
+        <script src="/cat-script.js"></script>
+        <!-- <script src="/script.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!-- Topbar -->
+<div class="topbar">
+    <div class="container row">
+        <div class="row left">
+            <span class="badge">Ships to 190+ countries</span>
+            <span class="tag">Free returns in the USA</span>
+        </div>
+        <div class="row right">
+            <div class="select">
+                <span>Currency</span>
+                <select id="currency">
+                    <option value="USD">$ USD</option>
+                    <option value="EUR">€ EUR</option>
+                    <option value="GBP">£ GBP</option>
+                    <option value="INR">₹ INR</option>
+                    <option value="JPY">¥ JPY</option>
+                </select>
+            </div>
+            <div class="select">
+                <span>Ship to</span>
+                <select id="shipto">
+                    <option value="US" selected>United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="EU">European Union</option>
+                    <option value="IN">India</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
+<header>
+    <div class="container header-row">
+        <div class="logo">
+            <div class="cube"></div>
+            <span>GlobalMart USA</span>
+        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        <div class="search">
+            <input id="search" type="search" placeholder="Search for products…" autocomplete="off" />
+            <button class="btn" id="searchBtn">🔎</button>
+            <div class="suggest hide" id="suggest"></div>
+        </div>
+        <div class="actions">
+            <button class="icon-btn" id="ordersBtn">📦 <span class="tag">Orders</span></button>
+            <button class="icon-btn" id="accountBtn">👤 <span class="tag">Account</span></button>
+            <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+                🛒 <span class="count" id="cartCount">0</span>
+            </button>
+
+        </div>
+    </div>
+    <!-- </header> -->
+
+    <!-- Desktop Nav -->
+
+</header>
+<!-- Cart Drawer -->
+<div class="drawer" id="cartDrawer" aria-hidden="true">
+    <div class="scrim" id="drawerScrim"></div>
+    <aside class="panel">
+        <div
+            style="display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid rgba(255,255,255,.06)">
+            <strong>🛒 Your Cart</strong>
+            <button class="btn ghost" id="closeCart">✕</button>
+        </div>
+        <div id="cartItems" style="padding:1rem;display:flex;flex-direction:column;gap:.8rem;flex:1;overflow:auto">
+        </div>
+        <div style="padding:1rem;border-top:1px solid rgba(255,255,255,.06)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
+                <span class="muted">Subtotal</span>
+                <strong id="subtotal">$0.00</strong>
+            </div>
+            <button class="btn" style="width:100%" onclick="alert('Checkout flow coming soon!')">Proceed to
+                Checkout</button>
+        </div>
+    </aside>
+</div>
